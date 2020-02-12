@@ -28,7 +28,7 @@ This program applies the SA algorithm to the problem of finding a ranking of par
 We can picture a tournament as a weighted directed graph where nodes are participants, and edges are the 
 result of matches between those participants, with the weights representing the margin of victory.
 
-![](images/SA_local_optimum.png)
+![](images/SA_example_tournament.png)
 
 
 **Kemeny Score**
@@ -36,7 +36,7 @@ result of matches between those participants, with the weights representing the 
 This program uses Kemeny Scores to measure the amount of disagreement of a ranking with a given tournament,
 calculated by summing the weights of all edges where the ranking disagrees with the tournament.
 
-![](images/SA_kemeney_example.png)
+![](images/SA_kemeny_example.png)
 
 
 **Tournament Data**
