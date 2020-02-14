@@ -1,7 +1,6 @@
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.io.*;
 
 public class SimulatedAnnealing {
@@ -69,12 +68,6 @@ public class SimulatedAnnealing {
                 // Downhill/flat move to better/equivalent solution- accept new solution
                 if (changeInCost <= 0) {
                     xNow = xNeighbour;
-
-                    // Update xBest and reset numNonImprove if better solution found
-                    if (changeInCost < 0) {
-                        xBest = xNow;
-                        numNonImprove = 0;
-                    }
                 }else{
                     // Uphill move to worse solution- accept solution probabilistically
                     double q = random.nextDouble();
@@ -86,13 +79,26 @@ public class SimulatedAnnealing {
                         xNow = xNeighbour;
                         numberOfUphillMoves ++;
                     }
-
-                    // Check if stopping condition met
-                    numNonImprove ++;
-                    if (numNonImprove > maxNumNonImprove) {
-                        break;
-                    }
                 }
+
+                // Check if new best solution found
+                if (xNow.cost < xBest.cost) {
+                    xBest = xNow;
+                    numNonImprove = 0;
+                }
+                
+                // Update or reset numNonImprove count
+                if (changeInCost < 0) {
+                    numNonImprove = 0;
+                }else{
+                    numNonImprove ++;
+                }
+
+                // Check stopping condition
+                if (numNonImprove > maxNumNonImprove) {
+                    break;
+                }
+
             }
             // Decrease temp
             temp *= coolingRate;
@@ -287,9 +293,9 @@ public class SimulatedAnnealing {
         }
 
         // Set algorithm parameters
-        int maxNumNonImprove = 75; // algorithm stops when specified number of new solutions have been looked at without a better solution being found
-        double initialTemp = 6;
-        int temperatureLength = 20; // number of iterations at a given temperature
+        int maxNumNonImprove = 700; // algorithm stops when specified number of new solutions have been looked at without a better solution being found
+        double initialTemp = 20;
+        int temperatureLength = 75; // number of iterations at a given temperature
         double coolingRate = 0.99; // rate at which temperature is reduced
         
         // Run algorithm
